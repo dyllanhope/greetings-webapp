@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-4">
+    </div>
+    <div style="text-align: center" class="col-4">
+        <h1 class="heading">Greetings</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <h4 class="counter">Counter:</h4>
+    </div>
+    <div class="col-4 nameBox">
+        <h3 style="color:white">Name:</h3>
+        <form action="/greet" method="POST">
+            <input name="inputName" type="text">
+            <button name="greetBtn" type="submit">Greet Me</button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <span class="counterDisplay counter" style="margin-right: 60px">{{counter}}</span>
+    </div>
+    {{!-- <div class="col-4 radioBtn">
+            <label class="">
+                <input id="english" type="radio" name="languageChoice" class="languageChoiceType" value="english">
+                <span class="label-body radioBtn">English</span>
+            </label>
+            <label class="">
+                <input id="afrikaans" type="radio" name="languageChoice" class="languageChoiceType" value="afrikaans">
+                <span class="label-body radioBtn">Afrikaans</span>
+            </label>
+            <label class="">
+                <input id="isiXhosa" type="radio" name="languageChoice" class="languageChoiceType" value="isixhosa">
+                <span class="label-body radioBtn">isiXhosa</span>
+            </label>
+        </div>
+        <div class="col-4">
+        </div> --}}
+</div>
+<div class="row">
+    <div class="col-4">
+    </div>
+    <div class="col-4 nameBox">
+        <button class="resetBtn" type="button" style="margin-right: 10px">Reset</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+    </div>
+    <div class="col-4" class="nameDisplay">
+        <div style="border: 1px solid orange;background-color: white">
+            <strong>Greet message:</strong>
+            <span><span class="name">{{name}}</span></span>
+        </div>
+    </div>
+</div>

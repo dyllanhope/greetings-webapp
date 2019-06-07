@@ -1,0 +1,54 @@
+.heading{
+    font-size: 80px;
+    color: black;
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+body{
+    background-color: darkkhaki;
+}
+.nameBox input{
+    float: right;
+    display: block;
+    margin-top:23px;
+    width:50%;
+}
+.nameBox h3{
+    float:left;
+    display:block;
+    margin-bottom: 0px;
+}
+.nameBox button{
+    float: right;
+    display: block;
+    color: black;
+    background-color: rgb(161, 161, 161);
+    border:2px solid white;
+}
+.nameBox button:hover{
+    float: right;
+    display: block;
+    border:2px solid gray;
+    
+}
+.displayBox{
+    border: 1px solid orange;
+    background-color: white;
+}
+.radioBtn{
+    color: black;
+    text-align: center;
+    align-self: auto;
+}
+.counter{
+    font-size: 40px;
+    color: black;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    float: right;
+}
+.warningArea{
+    border:1px solid red;
+}
+

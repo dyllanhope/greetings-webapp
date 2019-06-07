@@ -1,11 +1,13 @@
-function NameTrack(nameList) {
+module.exports = function (nameList) {
     var namesGreeted = nameList || {};
     var errName = '';
+    var newName = '';
 
     function loadItems() {
         namesGreeted = {};
     }
-    function addName(userName, lang) {
+    function addName(userName) {
+        newName = userName;
         var upFirst = userName.toUpperCase();
         const regex = /\d/;
         var numTest = regex.test(userName);
@@ -15,15 +17,15 @@ function NameTrack(nameList) {
                 namesGreeted[upFirst] = 0;
             }
         }
-        if (lang === "english") {
-            return "Hello, " + userName;
-        } else if (lang === "afrikaans") {
-            return "Hallo, " + userName;
-        } else if (lang === "isixhosa") {
-            return "Molo, " + userName;
-        } else {
-            return "Hello, " + userName;
-        }
+        // if (lang === "english") {
+        //     return "Hello, " + userName;
+        // } else if (lang === "afrikaans") {
+        //     return "Hallo, " + userName;
+        // } else if (lang === "isixhosa") {
+        //     return "Molo, " + userName;
+        // } else {
+        //     return "Hello, " + userName;
+        // }
 
     }
     function displayCounter() {
@@ -38,12 +40,16 @@ function NameTrack(nameList) {
             return 'error';
         }
     }
+    function displayName(){
+        return newName;
+    }
 
     return {
         greet: addName,
         counter: displayCounter,
         load: loadItems,
         items: displayString,
-        error: errorCheck
+        error: errorCheck,
+        name: displayName
     }
 }
