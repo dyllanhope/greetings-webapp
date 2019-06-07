@@ -7,51 +7,47 @@
 </div>
 <div class="row">
     <div class="col-4">
-        <h4 class="counter">Counter:</h4>
+        <span class="counterDisplay counter" style="margin-right: 60px">Counter: {{counter}}</span>
     </div>
-    <div class="col-4 nameBox">
-        <h3 style="color:white">Name:</h3>
-        <form action="/greet" method="POST">
-            <input name="inputName" type="text">
-            <button name="greetBtn" type="submit">Greet Me</button>
-        </form>
-    </div>
-</div>
-<div class="row">
-    <div class="col-4">
-        <span class="counterDisplay counter" style="margin-right: 60px">{{counter}}</span>
-    </div>
-    {{!-- <div class="col-4 radioBtn">
-            <label class="">
-                <input id="english" type="radio" name="languageChoice" class="languageChoiceType" value="english">
-                <span class="label-body radioBtn">English</span>
-            </label>
-            <label class="">
-                <input id="afrikaans" type="radio" name="languageChoice" class="languageChoiceType" value="afrikaans">
-                <span class="label-body radioBtn">Afrikaans</span>
-            </label>
-            <label class="">
-                <input id="isiXhosa" type="radio" name="languageChoice" class="languageChoiceType" value="isixhosa">
-                <span class="label-body radioBtn">isiXhosa</span>
-            </label>
+    <div class="col-5 nameBox center">
+        <div>
+            <form action="/greet" method="POST">
+                <label for="exampleEmailInput">Name:</label>
+                <input style="margin-top:0px" name="inputName" type="text"></input>
+                <div class="radioBtn">
+                    <label class="">
+                        <input id="english" type="radio" name="languageChoice" class="languageChoiceType"
+                            value="english">
+                        <span class="label-body radioBtn">English</span>
+                    </label>
+                    <label class="">
+                        <input id="afrikaans" type="radio" name="languageChoice" class="languageChoiceType"
+                            value="afrikaans">
+                        <span class="label-body radioBtn">Afrikaans</span>
+                    </label>
+                    <label class="">
+                        <input id="isiXhosa" type="radio" name="languageChoice" class="languageChoiceType"
+                            value="isixhosa">
+                        <span class="label-body radioBtn">isiXhosa</span>
+                    </label>
+                </div>
+                <button style=" margin-top: 5px" name="greetBtn" type="submit" class="center">Greet Me</button>
+            </form>
+            <label style="color: red;margin:5px" for="whoever">{{messages.info}}</label>
+            <a href="/greeted">Greeted</a>
         </div>
-        <div class="col-4">
-        </div> --}}
+    </div>
 </div>
 <div class="row">
     <div class="col-4">
     </div>
-    <div class="col-4 nameBox">
+    <div class="col-5 nameBox">
         <button class="resetBtn" type="button" style="margin-right: 10px">Reset</button>
-    </div>
-</div>
-<div class="row">
-    <div class="col-4">
-    </div>
-    <div class="col-4" class="nameDisplay">
-        <div style="border: 1px solid orange;background-color: white">
-            <strong>Greet message:</strong>
-            <span><span class="name">{{name}}</span></span>
+        <div class="nameDisplay">
+            <div>
+                <strong>Greet message:</strong>
+                <label for="whoever" class="name">{{greet}}{{name}}</label> 
+            </div>
         </div>
     </div>
 </div>

@@ -8,11 +8,11 @@
 body{
     background-color: darkkhaki;
 }
+input[type="radio"]{
+    vertical-align: baseline;
+}
 .nameBox input{
-    float: right;
-    display: block;
     margin-top:23px;
-    width:50%;
 }
 .nameBox h3{
     float:left;
@@ -20,17 +20,12 @@ body{
     margin-bottom: 0px;
 }
 .nameBox button{
-    float: right;
-    display: block;
     color: black;
-    background-color: rgb(161, 161, 161);
-    border:2px solid white;
+    background-color: white;
+    border: none;
 }
 .nameBox button:hover{
-    float: right;
-    display: block;
-    border:2px solid gray;
-    
+    background-color: rgb(24, 107, 184);
 }
 .displayBox{
     border: 1px solid orange;
@@ -51,4 +46,17 @@ body{
 .warningArea{
     border:1px solid red;
 }
+table{
+    width: 300px;
+}
+th{
+    background-color: white;
+    color: black;
+    font-size: 20px;
+}
+label{
+    color: white; 
+    font-size:20px;
+}
+
 

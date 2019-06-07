@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-5">
+        <h1>Names greeted</h1>
+        <table>
+            {{#each nameList}}
+            <tr>
+                <td><a href="/counter/{{name}}">{{name}}</a></td>
+            </tr>
+            {{/each}}
+        </table>
+
+        <label sfor="whoever">{{messages.amount}}</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-5 nameBox">
+        <form action="/return" method="POST">
+            <input style="margin-top: 5px;"type="submit" value="Return to home page">
+        </form>
+    </div>
+</div>
