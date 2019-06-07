@@ -1,3 +1,6 @@
+const assert = require("assert");
+const NameTrack = require("../nameTrack");
+
 describe('Testing the counting section of the NameTrack function', function(){
     it('Should return 5, with 6 names entered and 1 name repeating', function(){
         var greetCheckOne = NameTrack({Mike:0,Micah:0});
@@ -39,18 +42,6 @@ describe('Testing the greet and text handling section of the NameTrack function'
     it('Should return the 2 names that were loaded in for the list of names previously entered for a page refresh', function(){
         var greetCheckOne = NameTrack({ DYLLAN: 0, MICHAEL: 0 });
         assert.deepEqual(greetCheckOne.items(),{ DYLLAN: 0, MICHAEL: 0 });
-    })
-    it('Should return "Hello, Dyllan" with the name and language input (English)', function(){
-        var greetCheckOne = NameTrack();
-        assert.equal(greetCheckOne.greet("Dyllan","english"),"Hello, Dyllan");
-    })
-    it('Should return "Molo, Dyllan" with the name and language input (isiXhosa)', function(){
-        var greetCheckOne = NameTrack();
-        assert.equal(greetCheckOne.greet("Dyllan","isixhosa"),"Molo, Dyllan");
-    })
-    it('Should return the default language setting with the name input but no language input', function(){
-        var greetCheckOne = NameTrack();
-        assert.equal(greetCheckOne.greet("Dyllan"),"Hello, Dyllan");
     })
     it('Should return "error" when there was no name input', function(){
         var greetCheckOne = NameTrack();
