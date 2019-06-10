@@ -3,17 +3,17 @@ const NameTrack = require("../nameTrack");
 
 describe('Testing the counting section of the NameTrack function', function(){
     it('Should return 5, with 6 names entered and 1 name repeating', function(){
-        var greetCheckOne = NameTrack({Mike:0,Micah:0});
+        var greetCheckOne = NameTrack();
         greetCheckOne.greet("Dyllan");
         greetCheckOne.greet("Michael");
         greetCheckOne.greet("John");
         greetCheckOne.greet("Sam");
         greetCheckOne.greet("Daniel");
         greetCheckOne.greet("Dyllan");
-        assert.equal(greetCheckOne.counter(),7);
+        assert.equal(greetCheckOne.counter(),5);
     })
     it('Should return the 0 that was loaded in for the counter to be updated for a page refresh', function(){
-        var greetCheckOne = NameTrack({});
+        var greetCheckOne = NameTrack();
         assert.equal(greetCheckOne.counter(),0);
     })
     it('Should return an empty object with no parameter inserted', function(){
@@ -33,21 +33,21 @@ describe('Testing the counting section of the NameTrack function', function(){
 });
 describe('Testing the greet and text handling section of the NameTrack function', function(){
     it('Should return 2 of the entered names, and exclude the repeated name', function(){
-        var greetCheckOne = NameTrack({});
+        var greetCheckOne = NameTrack();
         greetCheckOne.greet("Dyllan");
         greetCheckOne.greet("Michael");
         greetCheckOne.greet("Dyllan");
-        assert.deepEqual(greetCheckOne.items(), { DYLLAN: 0, MICHAEL: 0 });
+        assert.deepEqual(greetCheckOne.nameList(), [{ name: "Dyllan", times: 2},{ name: "Michael", times: 1 }]);
     })
     it('Should return the 2 names that were loaded in for the list of names previously entered for a page refresh', function(){
         var greetCheckOne = NameTrack({ DYLLAN: 0, MICHAEL: 0 });
-        assert.deepEqual(greetCheckOne.items(),{ DYLLAN: 0, MICHAEL: 0 });
+        assert.deepEqual(greetCheckOne.nameList(),{ DYLLAN: 0, MICHAEL: 0 });
     })
-    it('Should return "error" when there was no name input', function(){
-        var greetCheckOne = NameTrack();
-        greetCheckOne.greet('');
-        assert.equal(greetCheckOne.error(),"error");
-    })
+    // it('Should return "error" when there was no name input', function(){
+    //     var greetCheckOne = NameTrack();
+    //     greetCheckOne.greet('');
+    //     assert.equal(greetCheckOne.error(),"error");
+    // })
 
 
 })
