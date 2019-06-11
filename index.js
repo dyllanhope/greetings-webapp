@@ -4,11 +4,30 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const session = require('express-session');
+const NameRoutes = require('./name-routes');
 
 const nameTrack = require("./nameTrack");
 
 const app = express();
-const nameTracker = nameTrack();
+
+const pg = require("pg");
+const Pool = pg.Pool;
+
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local){
+    useSSL = true;
+}
+// which db connection to use
+const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/name_list';
+
+const pool = new Pool({
+    connectionString,
+    ssl : useSSL
+  });
+
+  const nameTracker = nameTrack(pool);
+const nameRoutes = NameRoutes(nameTracker);
 
 app.use(session({
     secret: "secret message",
@@ -33,47 +52,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json())
 
-app.get("/", function (req, res) {
-    res.render("index", {
-        name: nameTracker.name(),
-        counter: nameTracker.counter(),
-        greet: nameTracker.greeting()
-    });
-});
+app.get("/", nameRoutes.index);
+app.post('/greet', nameRoutes.greet);
+app.get("/greeted", nameRoutes.greeted);
+app.post("/clear",nameRoutes.clear);
+app.get("/counter/:nameChoice", nameRoutes.counter);
+app.post("/return", nameRoutes.returnHome);
 
-app.post('/greet', function (req, res) {
-    if (req.body.languageChoice) {
-        if ((req.body.inputName).trim()) {
-            nameTracker.lang(req.body.languageChoice);
-            nameTracker.greet(req.body.inputName);
-            res.redirect('/');
-        } else {
-            req.flash("info", "Enter a name!");
-            res.redirect('/');
-        }
-    }else {
-        req.flash("info", "Select a language!");
-        res.redirect('/');
-    }
-});
-
-app.get("/greeted", function (req, res) {
-    res.render('names', {
-        nameList: nameTracker.nameList()
-    });
-});
-
-app.get("/counter/:nameChoice", function (req, res) {
-    let name = req.params.nameChoice;
-    req.flash("amount", "Hello, " + name + " has been greeted " + nameTracker.amntFor(name) + " times");
-    res.redirect("/greeted");
-});
-
-app.post("/return", function (req, res) {
-    res.redirect('/');
-});
-
-const PORT = process.env.PORT || 3010;
+const PORT = process.env.PORT || 3011;
 
 app.listen(PORT, function () {
     console.log("app started at port: " + PORT);

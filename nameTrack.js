@@ -1,47 +1,50 @@
-module.exports = function (nameList) {
-    var nameData = nameList || [];
+module.exports = function (pool) {
     var newName = '';
     var langGreet = '';
 
-    function addName(userName) {
-        let test = false;
+    async function addName(userName) {
         newName = userName.charAt(0).toUpperCase() + (userName.slice(1)).toLowerCase();
         const regex = /\d/;
         let numTest = regex.test(newName);
         if (userName.trim()) {
             if (numTest === false) {
-                for (let i = 0; i < nameData.length; i++) {
-                    if (newName === nameData[i].name) {
-                        nameData[i].times++;
-                        test = true;
-                    }
+                let test = await pool.query("SELECT * FROM names_greeted WHERE name = $1", [newName]);
+                if (test.rowCount === 1) {
+                    let newNum = test.rows[0].times_greeted;
+                    await pool.query('UPDATE names_greeted SET name = $1,times_greeted = $2 +1 WHERE id = $3', [newName, newNum, test.rows[0].id]);
                 }
-                if (test === false) {
-                    nameData.push({ name: newName, times: 1 });
+                else {
+                   let data = [
+                        newName,
+                        1
+                    ]
+                    await pool.query("insert into names_greeted (name, times_greeted) values ($1, $2) returning name, times_greeted", data);
                 }
             }
         }
+    }
+    async function displayInfo() {
+        let nameList = await pool.query("SELECT * FROM names_greeted");
+        return nameList.rows;
+    }
+    async function clearTable() {
+        await pool.query("DELETE FROM names_greeted");
     }
     function determineGreeting() {
         return langGreet;
     }
-    function displayCounter() {
-        return nameData.length;
+    async function displayCounter() {
+        let result = await pool.query("SELECT COUNT(*) FROM names_greeted");
+        let count = result.rows[0].count;
+        return count;
     }
     function displayName() {
         return newName;
     }
-    function displayNames() {
-        return nameData;
-    }
-    function displayGreetedFor(name) {
-        let num = 0;
-        for (let x = 0; x < nameData.length; x++) {
-            if (name === nameData[x].name) {
-                num = nameData[x].times;
-            }
-        }
-        return num;
+    async function displayGreetedFor(name) {
+        let times = await pool.query("SELECT * FROM names_greeted WHERE name = $1",[name]);
+        let count = times.rows[0].times_greeted;
+        return count;
     }
     function loadLanguage(lang) {
         if (lang === "english") {
@@ -56,9 +59,11 @@ module.exports = function (nameList) {
 
     return {
         greet: addName,
+        show: displayInfo,
+        clear: clearTable,
         counter: displayCounter,
         name: displayName,
-        nameList: displayNames,
+        // nameList: displayNames,
         amntFor: displayGreetedFor,
         greeting: determineGreeting,
         lang: loadLanguage
