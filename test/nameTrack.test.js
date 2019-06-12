@@ -49,18 +49,37 @@ describe("Testing Greetings WebApp", function () {
             assert.equal(num, 1);
         });
     });
-    describe("Testing the times_greeted section of db",function(){
-        it("Should return 'Dyllan' has been greeted twice",async function(){
+    describe("Testing the times_greeted section of db", function () {
+        it("Should return 'Dyllan' has been greeted twice", async function () {
             let greetCheckOne = NameTrack(pool);
 
             await greetCheckOne.greet("Dyllan");
             await greetCheckOne.greet("Dyllan");
 
             let greeted = await pool.query("SELECT times_greeted FROM names_greeted");
+            assert.deepEqual(greeted.rows, [{ times_greeted: 2 }]);
+
+        });
+        it("Should return 'Sam' has been greeted once and 'Dyllan' twice", async function () {
+            let greetCheckOne = NameTrack(pool);
+
+            await greetCheckOne.greet("Dyllan");
+            await greetCheckOne.greet("Dyllan");
+            await greetCheckOne.greet("Sam");
+
+            let name = "Sam";
+
+            let greeted = await pool.query("SELECT times_greeted FROM names_greeted WHERE name = $1", [name]);
+            assert.deepEqual(greeted.rows, [{ times_greeted: 1 }]);
+
+            name = "Dyllan";
+
+            greeted = await pool.query("SELECT times_greeted FROM names_greeted WHERE name = $1", [name]);
+            assert.deepEqual(greeted.rows, [{ times_greeted: 2 }]);
 
         });
     });
-    describe("Testing text saving", function () {
+    describe("Testing name saving", function () {
         it('Should return 2 of the entered names, and exclude the repeated name', async function () {
             var greetCheckOne = NameTrack(pool);
             await greetCheckOne.greet("Dyllan");
