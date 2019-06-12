@@ -1,3 +1,16 @@
 language: node_js
+
+env:
+  - DATABASE_URL=postgresql://postgres@localhost:5432/names_greeted_test
+
 node_js:
   - "v9.11.2"
+
+before_script:
+  - psql -c 'create database  names_greeted_test;' -U postgres
+  - psql -U postgres -d names_greeted_test -a -f tables.sql
+
+addons:
+    apt:
+    packages:
+    - postgresql-server-dev-9.2
