@@ -10,9 +10,11 @@ module.exports = function (nameTracker) {
     }
 
     async function greet(req, res) {
+        const regex = /\d/;
+        let numTest = regex.test(req.body.inputName);
 
         if (req.body.languageChoice) {
-            if ((req.body.inputName).trim()) {
+            if ((req.body.inputName).trim() && numTest === false) {
                 nameTracker.lang(req.body.languageChoice);
                 await nameTracker.greet(req.body.inputName);
                 res.redirect('/');
