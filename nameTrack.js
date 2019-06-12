@@ -3,7 +3,8 @@ module.exports = function (pool) {
     var langGreet = '';
 
     async function addName(userName) {
-        newName = userName.charAt(0).toUpperCase() + (userName.slice(1)).toLowerCase();
+        newName = userName.trim()
+        newName = newName.charAt(0).toUpperCase() + (newName.slice(1)).toLowerCase();
         const regex = /\d/;
         let numTest = regex.test(newName);
         if (userName.trim()) {
