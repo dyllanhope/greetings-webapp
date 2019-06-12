@@ -1,8 +1,8 @@
 module.exports = function (pool) {
     var newName = '';
-    var langGreet = '';
 
-    async function addName(userName) {
+    async function addName(userName, lang) {
+        var langGreet = '';
         newName = userName.trim()
         newName = newName.charAt(0).toUpperCase() + (newName.slice(1)).toLowerCase();
         const regex = /\d/;
@@ -23,6 +23,14 @@ module.exports = function (pool) {
                 }
             }
         }
+        if (lang === "english") {
+            langGreet = "Hello, ";
+        } else if (lang === "afrikaans") {
+            langGreet = "Hallo, ";
+        } else if (lang === "isixhosa") {
+            langGreet = "Molo, ";
+        }
+        newName = langGreet + newName;
     }
     async function displayInfo() {
         let nameList = await pool.query("SELECT * FROM names_greeted");
@@ -33,9 +41,6 @@ module.exports = function (pool) {
         langGreet = '';
         await pool.query("DELETE FROM names_greeted");
     }
-    function determineGreeting() {
-        return langGreet;
-    }
     async function displayCounter() {
         let result = await pool.query("SELECT COUNT(*) FROM names_greeted");
         if (result) {
@@ -45,7 +50,7 @@ module.exports = function (pool) {
         }
         return count;
     }
-    function displayName() {
+    function displayGreeting() {
         return newName;
     }
     async function displayGreetedFor(name) {
@@ -53,26 +58,12 @@ module.exports = function (pool) {
         let count = times.rows[0].times_greeted;
         return count;
     }
-    function loadLanguage(lang) {
-        if (lang === "english") {
-            langGreet = "Hello, ";
-        } else if (lang === "afrikaans") {
-            langGreet = "Hallo, ";
-        } else if (lang === "isixhosa") {
-            langGreet = "Molo, ";
-        }
-    }
-
-
     return {
-        greet: addName,
-        show: displayInfo,
-        clear: clearTable,
-        counter: displayCounter,
-        name: displayName,
-        // nameList: displayNames,
-        amntFor: displayGreetedFor,
-        greeting: determineGreeting,
-        lang: loadLanguage
+        addName,
+        displayInfo,
+        clearTable,
+        displayCounter,
+        displayGreeting,
+        displayGreetedFor
     }
 }

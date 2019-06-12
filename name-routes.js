@@ -1,11 +1,10 @@
 module.exports = function (nameTracker) {
 
     async function index(req, res) {
-        let count = await nameTracker.counter();
+        let count = await nameTracker.displayCounter();
         res.render("index", {
-            name: nameTracker.name(),
-            counter: count,
-            greet: nameTracker.greeting()
+            name: nameTracker.displayGreeting(),
+            counter: count
         });
     }
 
@@ -15,8 +14,7 @@ module.exports = function (nameTracker) {
 
         if (req.body.languageChoice) {
             if ((req.body.inputName).trim() && numTest === false) {
-                nameTracker.lang(req.body.languageChoice);
-                await nameTracker.greet(req.body.inputName);
+                await nameTracker.addName(req.body.inputName, req.body.languageChoice);
                 res.redirect('/');
             } else {
                 req.flash("info", "Enter a name!");
@@ -28,22 +26,21 @@ module.exports = function (nameTracker) {
         }
     }
     async function clear(req, res) {
-        await nameTracker.clear();
+        await nameTracker.clearTable();
         res.redirect("/");
     }
 
     async function greeted(req, res) {
-        let nameList = await nameTracker.show();
+        let nameList = await nameTracker.displayInfo();
         res.render('names', {
             nameList
-            //nameList: nameTracker.nameList()
         });
     }
 
     async function counter(req, res) {
 
         let name = req.params.nameChoice;
-        let num = await nameTracker.amntFor(name);
+        let num = await nameTracker.displayGreetedFor(name);
 
         if (num === 1) {
             req.flash("amount",name + " has been greeted " + num + " time");
