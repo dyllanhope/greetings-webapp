@@ -28,6 +28,8 @@ module.exports = function (pool) {
         return nameList.rows;
     }
     async function clearTable() {
+        newName = '';
+        langGreet = '';
         await pool.query("DELETE FROM names_greeted");
     }
     function determineGreeting() {

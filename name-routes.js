@@ -25,8 +25,8 @@ module.exports = function (nameTracker) {
             res.redirect('/');
         }
     }
-    function clear(req, res) {
-        nameTracker.clear();
+    async function clear(req, res) {
+        await nameTracker.clear();
         res.redirect("/");
     }
 
@@ -44,9 +44,9 @@ module.exports = function (nameTracker) {
         let num = await nameTracker.amntFor(name);
 
         if (num === 1) {
-            req.flash("amount", "Hello, " + name + " has been greeted " + num + " time");
+            req.flash("amount",name + " has been greeted " + num + " time");
         } else {
-            req.flash("amount", "Hello, " + name + " has been greeted " + num + " times");
+            req.flash("amount",name + " has been greeted " + num + " times");
         }
         res.redirect("/greeted");
     }
