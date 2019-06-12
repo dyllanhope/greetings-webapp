@@ -43,7 +43,11 @@ module.exports = function (nameTracker) {
         let name = req.params.nameChoice;
         let num = await nameTracker.amntFor(name);
 
-        req.flash("amount", "Hello, " + name + " has been greeted " + num + " times");
+        if (num === 1) {
+            req.flash("amount", "Hello, " + name + " has been greeted " + num + " time");
+        } else {
+            req.flash("amount", "Hello, " + name + " has been greeted " + num + " times");
+        }
         res.redirect("/greeted");
     }
 

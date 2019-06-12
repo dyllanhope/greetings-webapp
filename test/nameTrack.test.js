@@ -81,7 +81,7 @@ describe("Testing Greetings WebApp", function () {
     });
     describe("Testing name saving", function () {
         it('Should return 2 of the entered names, and exclude the repeated name', async function () {
-            var greetCheckOne = NameTrack(pool);
+            let greetCheckOne = NameTrack(pool);
             await greetCheckOne.greet("Dyllan");
             await greetCheckOne.greet("Michael");
             await greetCheckOne.greet("Dyllan");
@@ -89,7 +89,7 @@ describe("Testing Greetings WebApp", function () {
             assert.deepEqual(testNames.rows, [{ name: "Michael" }, { name: "Dyllan" }]);
         });
         it('Should return 4 of the entered names, and exclude the repeated names', async function () {
-            var greetCheckOne = NameTrack(pool);
+            let greetCheckOne = NameTrack(pool);
             await greetCheckOne.greet("Dyllan");
             await greetCheckOne.greet("Michael");
             await greetCheckOne.greet("Dyllan");
@@ -101,13 +101,16 @@ describe("Testing Greetings WebApp", function () {
         });
     });
     describe("Testing table clearing", function () {
-        it("Should return an empty table after clearing", async function () {
-            var greetCheckOne = NameTrack(pool);
+        it("Should return an empty table after adding 2 names then clearing", async function () {
+            let greetCheckOne = NameTrack(pool);
             await greetCheckOne.greet("Dyllan");
             await greetCheckOne.greet("Michael");
 
+            let testNames = await pool.query("SELECT name FROM names_greeted");
+            assert.deepEqual(testNames.rows, [{ name: "Dyllan" }, { name: "Michael" }]);
+
             await greetCheckOne.clear();
-            let testNames = await pool.query("SELECT * FROM names_greeted");
+            testNames = await pool.query("SELECT * FROM names_greeted");
             assert.deepEqual(testNames.rows, []);
         });
     });
