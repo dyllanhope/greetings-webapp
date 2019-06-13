@@ -15,10 +15,16 @@ module.exports = function (nameTracker) {
 
         if (req.body.languageChoice) {
             if ((req.body.inputName).trim() && numTest === false) {
-                await nameTracker.addName(req.body.inputName, req.body.languageChoice);
-                res.redirect('/');
+                if (numTest === false) {
+                    await nameTracker.addName(req.body.inputName, req.body.languageChoice);
+                    res.redirect('/');
+                } else {
+                    req.flash('info', nameTracker.errorMessage());
+                    res.redirect('/');
+                }
             } else {
-                req.flash('info', 'Enter a name!');
+                console.log(nameTracker.errorMessage());
+                req.flash('info', nameTracker.errorMessage());
                 res.redirect('/');
             }
         } else {

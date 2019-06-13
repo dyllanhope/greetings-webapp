@@ -50,6 +50,13 @@ describe('Testing Greetings WebApp', function () {
             let num = await greetCheckOne.displayCounter();
             assert.strict.equal(num, '1');
         });
+        it('Should return a counter of 0 with no names entered', async function () {
+            await pool.query('delete from names_greeted;');
+            let greetCheckOne = NameTrack(pool);
+
+            let num = await greetCheckOne.displayCounter();
+            assert.strict.equal(num, '0');
+        });
     });
     describe('Testing the times_greeted section of db', function () {
         it("Should return 'Dyllan' has been greeted twice", async function () {

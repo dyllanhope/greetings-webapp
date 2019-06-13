@@ -43,10 +43,8 @@ module.exports = function (pool) {
     };
     async function displayCounter () {
         let result = await pool.query('SELECT COUNT(*) FROM names_greeted');
-        var count = 0;
-        if (result) {
-            count = result.rows[0].count;
-        }
+        var count;
+        count = result.rows[0].count;
         return count;
     };
     function displayGreeting () {
