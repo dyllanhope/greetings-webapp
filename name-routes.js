@@ -1,14 +1,15 @@
-module.exports = function (nameTracker) {
+'use strict';
 
-    async function index(req, res) {
+module.exports = function (nameTracker) {
+    async function index (req, res) {
         let count = await nameTracker.displayCounter();
-        res.render("index", {
+        res.render('index', {
             name: nameTracker.displayGreeting(),
             counter: count
         });
     }
 
-    async function greet(req, res) {
+    async function greet (req, res) {
         const regex = /\d/;
         let numTest = regex.test(req.body.inputName);
 
@@ -17,40 +18,39 @@ module.exports = function (nameTracker) {
                 await nameTracker.addName(req.body.inputName, req.body.languageChoice);
                 res.redirect('/');
             } else {
-                req.flash("info", "Enter a name!");
+                req.flash('info', 'Enter a name!');
                 res.redirect('/');
             }
         } else {
-            req.flash("info", "Select a language!");
+            req.flash('info', 'Select a language!');
             res.redirect('/');
         }
     }
-    async function clear(req, res) {
+    async function clear (req, res) {
         await nameTracker.clearTable();
-        res.redirect("/");
+        res.redirect('/');
     }
 
-    async function greeted(req, res) {
+    async function greeted (req, res) {
         let nameList = await nameTracker.displayInfo();
         res.render('names', {
             nameList
         });
     }
 
-    async function counter(req, res) {
-
+    async function counter (req, res) {
         let name = req.params.nameChoice;
         let num = await nameTracker.displayGreetedFor(name);
 
         if (num === 1) {
-            req.flash("amount",name + " has been greeted " + num + " time");
+            req.flash('amount', name + ' has been greeted ' + num + ' time');
         } else {
-            req.flash("amount",name + " has been greeted " + num + " times");
+            req.flash('amount', name + ' has been greeted ' + num + ' times');
         }
-        res.redirect("/greeted");
+        res.redirect('/greeted');
     }
 
-    function returnHome(req, res) {
+    function returnHome (req, res) {
         res.redirect('/');
     }
 
@@ -61,5 +61,5 @@ module.exports = function (nameTracker) {
         clear,
         counter,
         returnHome
-    }
-}
+    };
+};
