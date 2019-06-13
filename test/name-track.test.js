@@ -59,8 +59,8 @@ describe('Testing Greetings WebApp', function () {
             await greetCheckOne.addName('Dyllan');
             await greetCheckOne.addName('Dyllan');
 
-            let greeted = await pool.query('SELECT times_greeted FROM names_greeted');
-            assert.strict.deepEqual(greeted.rows, [{ times_greeted: 2 }]);
+            let num = await greetCheckOne.displayGreetedFor('Dyllan');
+            assert.strict.deepEqual(num, 2);
         });
         it("Should return 'Sam' has been greeted once and 'Dyllan' twice", async function () {
             await pool.query('delete from names_greeted;');
@@ -70,15 +70,11 @@ describe('Testing Greetings WebApp', function () {
             await greetCheckOne.addName('Dyllan');
             await greetCheckOne.addName('Sam');
 
-            let name = 'Sam';
+            let num = await greetCheckOne.displayGreetedFor('Sam');
+            assert.strict.deepEqual(num, 1);
 
-            let greeted = await pool.query('SELECT times_greeted FROM names_greeted WHERE name = $1', [name]);
-            assert.strict.deepEqual(greeted.rows, [{ times_greeted: 1 }]);
-
-            name = 'Dyllan';
-
-            greeted = await pool.query('SELECT times_greeted FROM names_greeted WHERE name = $1', [name]);
-            assert.strict.deepEqual(greeted.rows, [{ times_greeted: 2 }]);
+            num = await greetCheckOne.displayGreetedFor('Dyllan');
+            assert.strict.deepEqual(num, 2);
         });
     });
     describe('Testing name saving', function () {
@@ -115,8 +111,8 @@ describe('Testing Greetings WebApp', function () {
             assert.strict.deepEqual(testNames.rows, [{ name: 'Dyllan' }, { name: 'Michael' }]);
 
             await greetCheckOne.clearTable();
-            testNames = await pool.query('SELECT * FROM names_greeted');
-            assert.strict.deepEqual(testNames.rows, []);
+            testNames = await greetCheckOne.displayInfo();
+            assert.strict.deepEqual(testNames, []);
         });
     });
     describe('Testing greeting message', function () {
